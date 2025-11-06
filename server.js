@@ -1,42 +1,62 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+const dotenv = require('dotenv');
 const connectDB = require('./config/database');
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB
-connectDB();
+// --- Connect to MongoDB ---
+connectDB()
+  .then(() => console.log('✅ Connected to MongoDB successfully!'))
+  .catch((err) => {
+    console.error('❌ MongoDB connection failed:', err.message);
+    process.exit(1); // Stop the app if DB connection fails
+  });
 
-// Middleware
+// --- Middleware ---
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// --- Routes ---
 app.use('/contacts', require('./routes/contacts'));
 
-// Basic route for testing
+// --- Root route for testing ---
 app.get('/', (req, res) => {
-  res.json({ 
-    message: 'Contacts API is running!',
+  res.json({
+    message: '📇 Contacts API is running successfully!',
     endpoints: {
       getAllContacts: 'GET /contacts',
       getContactById: 'GET /contacts/:id'
-    }
+    },
+    author: 'Your Name',
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
-// Handle 404 errors
+// --- 404 Error Handler ---
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
-    message: 'Route not found'
+    message: '❌ Route not found. Check your endpoint URL.'
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
-  console.log(`✅ Local: http://localhost:${PORT}`);
+// --- Global Error Handler (important for Render) ---
+app.use((err, req, res, next) => {
+  console.error('🔥 Server Error:', err.stack);
+  res.status(500).json({
+    success: false,
+    message: 'Internal Server Error',
+    error: err.message
+  });
+});
+
+// --- Start Server ---
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🌐 Access it at: http://localhost:${PORT}`);
 });
