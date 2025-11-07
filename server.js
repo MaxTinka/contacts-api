@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
       getAllContacts: 'GET /contacts',
       getContactById: 'GET /contacts/:id'
     },
-    author: 'Your Name',
+    author: 'Max Tinka',
     environment: process.env.NODE_ENV || 'development'
   });
 });
