@@ -12,9 +12,15 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log('✅ Connected to MongoDB successfully!'))
-  .catch(err => console.error('❌ MongoDB connection error:', err));
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
 // Routes
 app.use('/contacts', require('./routes/contacts'));
@@ -38,5 +44,6 @@ app.get('/', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 2000;
-app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
+// Start server
+const PORT = process.env.PORT || 2000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
