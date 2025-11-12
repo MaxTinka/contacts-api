@@ -49,7 +49,93 @@ const getContactById = async (req, res) => {
   }
 };
 
+// Create a new contact
+const createContact = async (req, res) => {
+  try {
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+
+    if (!firstName || !lastName || !email || !favoriteColor || !birthday) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'All fields are required.' 
+      });
+    }
+
+    const newContact = await Contact.create({
+      firstName,
+      lastName,
+      email,
+      favoriteColor,
+      birthday
+    });
+
+    res.status(201).json({ 
+      success: true,
+      id: newContact._id 
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Error creating contact',
+      error: error.message 
+    });
+  }
+};
+
+// Update a contact by ID
+const updateContact = async (req, res) => {
+  try {
+    const { firstName, lastName, email, favoriteColor, birthday } = req.body;
+
+    const updated = await Contact.findByIdAndUpdate(
+      req.params.id,
+      { firstName, lastName, email, favoriteColor, birthday },
+      { new: true, runValidators: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Contact not found.' 
+      });
+    }
+
+    res.sendStatus(204); // No Content
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Error updating contact',
+      error: error.message 
+    });
+  }
+};
+
+// Delete a contact by ID
+const deleteContact = async (req, res) => {
+  try {
+    const deleted = await Contact.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ 
+        success: false,
+        message: 'Contact not found.' 
+      });
+    }
+
+    res.sendStatus(204); // No Content
+  } catch (error) {
+    res.status(500).json({ 
+      success: false,
+      message: 'Error deleting contact',
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getAllContacts,
-  getContactById
+  getContactById,
+  createContact,
+  updateContact,
+  deleteContact
 };
