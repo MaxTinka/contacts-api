@@ -1,13 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const contactRoutes = require('./routes/contacts');
+const contactRoutes = require('./routes/contacts');  // Add this line
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/contacts', contactRoutes);
+app.use('/contacts', contactRoutes);  // Add this line - this enables /contacts routes
 
 app.get('/', (req, res) => {
   res.json({ message: 'Contacts API is running!' });
