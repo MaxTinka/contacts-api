@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const Contact = require('./models/Contact');
 
 const contactsData = [
-  { firstName: "John", lastName: "Doe", email: "john@example.com", favoriteColor: "blue", birthday: "1990-05-15" },
-  { firstName: "Jane", lastName: "Smith", email: "jane@example.com", favoriteColor: "green", birthday: "1988-12-22" },
-  { firstName: "Mike", lastName: "Johnson", email: "mike@example.com", favoriteColor: "red", birthday: "1995-07-30" },
-  { firstName: "Sarah", lastName: "Williams", email: "sarah@example.com", favoriteColor: "purple", birthday: "1992-03-18" },
-  { firstName: "David", lastName: "Brown", email: "david@example.com", favoriteColor: "orange", birthday: "1985-11-09" }
+  { firstName: "Max", lastName: "Tinka", email: "maxtinka7@gmail.com", favoriteColor: "blue", birthday: "1997-09-16" },
+  { firstName: "Bella", lastName: "Kabahuma", email: "bella@example.com", favoriteColor: "green", birthday: "2000-01-01" },
+  { firstName: "Matt", lastName: "Omoro", email: "matt@example.com", favoriteColor: "red", birthday: "1995-07-30" },
+  { firstName: "Joy", lastName: "Blessed", email: "joy@example.com", favoriteColor: "purple", birthday: "1992-03-18" },
+  { firstName: "Job", lastName: "Talemwa", email: "job@example.com", favoriteColor: "orange", birthday: "1985-11-09" }
 ];
 
 async function seedData() {
