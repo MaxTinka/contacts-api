@@ -1,30 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const asyncHandler = require('express-async-handler');
-const {
-  getAllContacts,
-  getContactById,
-  createContact,
-  updateContact,
-  deleteContact
-} = require('../controllers/contactsController');
+const Contact = require('../models/Contact');
 
-// Optional: validation middleware can be added here in the future
-// const validateContact = require('../middleware/validateContact');
+// GET all contacts
+router.get('/', async (req, res) => {
+  try {
+    const contacts = await Contact.find();
+    res.json(contacts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-// GET /contacts - Get all contacts
-router.get('/', asyncHandler(getAllContacts));
-
-// GET /contacts/:id - Get single contact by ID
-router.get('/:id', asyncHandler(getContactById));
-
-// POST /contacts - Create new contact
-router.post('/', asyncHandler(createContact));
-
-// PUT /contacts/:id - Update contact by ID
-router.put('/:id', asyncHandler(updateContact));
-
-// DELETE /contacts/:id - Delete contact by ID
-router.delete('/:id', asyncHandler(deleteContact));
+// GET single contact by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const contact = await Contact.findById(req.params.id);
+    if (!contact) {
+      return res.status(404).json({ message: 'Contact not found' });
+    }
+    res.json(contact);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;
