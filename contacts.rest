@@ -1,0 +1,32 @@
+### GET all contacts
+GET https://contacts-api-111111.onrender.com/contacts
+
+### GET single contact (replace ID with actual)
+GET https://contacts-api-111111.onrender.com/contacts/6a06d41e8a7ccc37b1a1d25d
+
+### POST create new contact
+POST https://contacts-api-111111.onrender.com/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Sarah",
+  "lastName": "Johnson",
+  "email": "sarah@example.com",
+  "favoriteColor": "pink",
+  "birthday": "1994-07-25"
+}
+
+### PUT update contact (replace ID with actual)
+PUT https://contacts-api-111111.onrender.com/contacts/6a06d41e8a7ccc37b1a1d25d
+Content-Type: application/json
+
+{
+  "firstName": "Maximus",
+  "lastName": "Tinka",
+  "email": "maximus@example.com",
+  "favoriteColor": "navy blue",
+  "birthday": "1997-09-16"
+}
+
+### DELETE contact (replace ID with actual)
+DELETE https://contacts-api-111111.onrender.com/contacts/6a06d41e8a7ccc37b1a1d25d
